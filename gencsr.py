@@ -1,6 +1,13 @@
 import sys
 import os
 
+country = "FR"
+state = "Franche-Comte"
+locality = "Montbeliard"
+organization = "Web&Design"
+organizationalunit = "IT"
+email = "hebergement@webetdesign.com"
+
 def checkPath(dest):
 	if not os.path.exists(dest):
 		os.makedirs(dest)
@@ -9,7 +16,8 @@ def checkPath(dest):
 	return dest
 
 def gencsr(host, dest):
-	cmd = "openssl req -new -newkey rsa:2048 -sha256 -nodes -out " + dest+host + ".csr -keyout " + dest+host + ".key -subj '/C=FR/CN=" + host + "'"
+	subject = "/C="+country+"/ST="+state+"/L="+locality+"/O="+organization+"/OU="+organizationalunit+"/CN="+host+"/emailAddress="+email
+	cmd = "openssl req -new -newkey rsa:2048 -sha256 -nodes -out " + dest+host + ".csr -keyout " + dest+host + ".key -subj '" + subject + "'"
 	cat = "cat " + dest + host + '.csr'
 	os.system(cmd)
 	os.system(cat)
